@@ -43,18 +43,16 @@ const menus = [
 
 export default function AppSidebar() {
   return (
-    <aside className="hidden lg:flex h-screen w-72 flex-col border-r bg-white">
-      <div className="border-b p-6">
-        <h2 className="text-2xl font-bold text-indigo-600">
+    <aside className="hidden h-screen w-72 flex-col border-r border-[#16223A]/8 bg-white lg:flex">
+      <div className="border-b border-[#16223A]/8 p-6">
+        <h2 className="text-xl font-semibold tracking-tight text-[#16223A]">
           AlgorithmGuru
         </h2>
 
-        <p className="mt-1 text-sm text-slate-500">
-          AI Learning Platform
-        </p>
+        <p className="mt-1 text-sm text-[#5B6E8C]">AI Learning Platform</p>
       </div>
 
-      <nav className="flex-1 space-y-2 p-4">
+      <nav className="flex-1 space-y-1 p-4">
         {menus.map((item) => {
           const Icon = item.icon;
 
@@ -63,27 +61,25 @@ export default function AppSidebar() {
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-xl px-4 py-3 transition ${
+                `flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition ${
                   isActive
-                    ? "bg-indigo-600 text-white"
-                    : "text-slate-700 hover:bg-slate-100"
+                    ? "bg-[#119DA4] text-white"
+                    : "text-[#5B6E8C] hover:bg-[#16223A]/5 hover:text-[#16223A]"
                 }`
               }
             >
-              <Icon size={20} />
+              <Icon size={18} />
               {item.title}
             </NavLink>
           );
         })}
       </nav>
 
-      <div className="border-t p-4">
-        <div className="rounded-2xl bg-indigo-50 p-4">
-          <p className="text-sm font-semibold text-indigo-700">
-            🔥 Current Streak
-          </p>
+      <div className="border-t border-[#16223A]/8 p-4">
+        <div className="rounded-xl bg-[#119DA4]/8 p-4">
+          <p className="text-sm font-medium text-[#0C7E83]">Current streak</p>
 
-          <h3 className="mt-1 text-2xl font-bold">
+          <h3 className="mt-1 text-2xl font-semibold tracking-tight text-[#16223A]">
             18 Days
           </h3>
         </div>

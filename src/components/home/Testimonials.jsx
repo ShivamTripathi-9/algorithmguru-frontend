@@ -23,60 +23,43 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="bg-slate-50 py-20">
-      <div className="mx-auto max-w-7xl px-6">
-        {/* Header */}
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="rounded-full bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-600">
-            Testimonials
-          </span>
-
-          <h2 className="mt-5 text-4xl font-bold text-slate-900">
-            Loved by AI Learners
+    <section className="bg-white py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-[#16223A]">
+            Loved by AI learners
           </h2>
-
-          <p className="mt-4 text-lg text-slate-600">
+          <p className="mt-3 text-[#5B6E8C]">
             Thousands of students are building practical AI skills with
             AlgorithmGuru.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((item, index) => (
-            <div
-              key={index}
-              className="rounded-3xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-            >
-              {/* Rating */}
-              <div className="mb-5 flex gap-1">
+            <div key={index} className="rounded-xl bg-[#F7FAFB] p-7">
+              <div className="mb-4 flex gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
-                    size={18}
-                    className="fill-yellow-400 text-yellow-400"
+                    size={15}
+                    className="fill-[#119DA4] text-[#119DA4]"
                   />
                 ))}
               </div>
 
-              {/* Review */}
-              <p className="leading-7 text-slate-600">
-                "{item.review}"
-              </p>
+              <p className="leading-6 text-[#5B6E8C]">"{item.review}"</p>
 
-              {/* User */}
-              <div className="mt-8 flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-600 text-lg font-bold text-white">
+              <div className="mt-6 flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#16223A] text-sm font-semibold text-white">
                   {item.name.charAt(0)}
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-slate-900">
+                  <h4 className="text-sm font-medium text-[#16223A]">
                     {item.name}
                   </h4>
-                  <p className="text-sm text-slate-500">
-                    {item.role}
-                  </p>
+                  <p className="text-xs text-[#5B6E8C]">{item.role}</p>
                 </div>
               </div>
             </div>
@@ -84,25 +67,25 @@ export default function Testimonials() {
         </div>
 
         {/* Stats */}
-        <div className="mt-16 grid grid-cols-2 gap-6 rounded-3xl bg-indigo-600 p-8 text-center text-white md:grid-cols-4">
+        <div className="mt-16 grid grid-cols-2 gap-8 rounded-xl bg-[#16223A] p-8 text-center text-white md:grid-cols-4">
           <div>
-            <h3 className="text-3xl font-bold">10K+</h3>
-            <p className="mt-1 text-indigo-100">Students</p>
+            <h3 className="text-2xl font-semibold">10K+</h3>
+            <p className="mt-1 text-sm text-white/60">Students</p>
           </div>
 
           <div>
-            <h3 className="text-3xl font-bold">50+</h3>
-            <p className="mt-1 text-indigo-100">AI Projects</p>
+            <h3 className="text-2xl font-semibold">50+</h3>
+            <p className="mt-1 text-sm text-white/60">AI Projects</p>
           </div>
 
           <div>
-            <h3 className="text-3xl font-bold">95%</h3>
-            <p className="mt-1 text-indigo-100">Completion Rate</p>
+            <h3 className="text-2xl font-semibold">95%</h3>
+            <p className="mt-1 text-sm text-white/60">Completion Rate</p>
           </div>
 
           <div>
-            <h3 className="text-3xl font-bold">4.9★</h3>
-            <p className="mt-1 text-indigo-100">Average Rating</p>
+            <h3 className="text-2xl font-semibold">4.9★</h3>
+            <p className="mt-1 text-sm text-white/60">Average Rating</p>
           </div>
         </div>
       </div>

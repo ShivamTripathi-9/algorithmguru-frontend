@@ -4,7 +4,7 @@ export default function SearchBar({ value, onChange }) {
   return (
     <div className="relative mb-6">
       <Search
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5B6E8C]"
         size={20}
       />
 
@@ -13,7 +13,7 @@ export default function SearchBar({ value, onChange }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Search AI projects..."
-        className="w-full rounded-2xl border border-slate-300 bg-white py-4 pl-12 pr-4 outline-none transition focus:border-indigo-500"
+        className="w-full rounded-xl border border-[#16223A]/10 bg-white py-4 pl-12 pr-4 text-[#16223A] outline-none transition focus:border-[#119DA4]"
       />
     </div>
   );

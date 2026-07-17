@@ -1,20 +1,20 @@
 const skills = [
-  { name: "Machine Learning", progress: 85, color: "bg-blue-500" },
-  { name: "Deep Learning", progress: 70, color: "bg-violet-500" },
-  { name: "Computer Vision", progress: 60, color: "bg-emerald-500" },
-  { name: "Natural Language Processing", progress: 75, color: "bg-orange-500" },
-  { name: "Generative AI", progress: 90, color: "bg-pink-500" },
-  { name: "AI Agents", progress: 45, color: "bg-indigo-500" },
+  { name: "Machine Learning", progress: 85 },
+  { name: "Deep Learning", progress: 70 },
+  { name: "Computer Vision", progress: 60 },
+  { name: "Natural Language Processing", progress: 75 },
+  { name: "Generative AI", progress: 90 },
+  { name: "AI Agents", progress: 45 },
 ];
 
 export default function SkillProgress() {
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h2 className="text-2xl font-bold text-slate-900">
-        Skill Progress
+    <div className="rounded-2xl border border-[#16223A]/8 bg-white p-6">
+      <h2 className="text-2xl font-semibold tracking-tight text-[#16223A]">
+        Skill progress
       </h2>
 
-      <p className="mt-2 text-sm text-slate-500">
+      <p className="mt-2 text-sm text-[#5B6E8C]">
         Track your learning across AI domains.
       </p>
 
@@ -22,18 +22,16 @@ export default function SkillProgress() {
         {skills.map((skill) => (
           <div key={skill.name}>
             <div className="mb-2 flex items-center justify-between">
-              <span className="font-medium text-slate-700">
-                {skill.name}
-              </span>
+              <span className="font-medium text-[#16223A]">{skill.name}</span>
 
-              <span className="text-sm font-semibold text-slate-500">
+              <span className="text-sm font-medium text-[#5B6E8C]">
                 {skill.progress}%
               </span>
             </div>
 
-            <div className="h-3 overflow-hidden rounded-full bg-slate-200">
+            <div className="h-2 overflow-hidden rounded-full bg-[#16223A]/8">
               <div
-                className={`h-full rounded-full ${skill.color}`}
+                className="h-full rounded-full bg-[#119DA4]"
                 style={{ width: `${skill.progress}%` }}
               />
             </div>

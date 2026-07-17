@@ -1,6 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
 import toast from "react-hot-toast";
-import { PROJECTS as FALLBACK_PROJECTS } from "../data/projects";
 import { listProjects, getProgress } from "../lib/api";
 import ProjectsHero from "../components/projects/ProjectsHero";
 import SearchBar from "../components/projects/SearchBar";
@@ -33,6 +32,7 @@ function normalizeProject(p) {
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState("All");
   const [category, setCategory] = useState("All");
@@ -47,11 +47,6 @@ export default function ProjectsPage() {
       .then(async (data) => {
         if (cancelled) return;
         const list = Array.isArray(data) ? data : data?.projects ?? [];
-
-        if (list.length === 0) {
-          setProjects(FALLBACK_PROJECTS);
-          return;
-        }
 
         const normalized = list.map(normalizeProject);
 
@@ -72,8 +67,9 @@ export default function ProjectsPage() {
       })
       .catch(() => {
         if (!cancelled) {
-          toast.error("Couldn't load projects from server, showing local data");
-          setProjects(FALLBACK_PROJECTS);
+          toast.error("Couldn't load projects from server");
+          setLoadError(true);
+          setProjects([]);
         }
       })
       .finally(() => {
@@ -119,11 +115,19 @@ export default function ProjectsPage() {
     if (type === "category") setCategory(value);
   };
 
+  const resetFilters = () => {
+    setSearch("");
+    setDifficulty("All");
+    setCategory("All");
+    setSort("Newest");
+    setPage(1);
+  };
+
   return (
     <>
       <ProjectsHero />
 
-      <section className="bg-slate-50 py-8">
+      <section className="bg-[#F7FAFB] py-8">
         <div className="mx-auto max-w-7xl px-4">
           <SearchBar value={search} onChange={(v) => { setSearch(v); setPage(1); }} />
 
@@ -142,18 +146,16 @@ export default function ProjectsPage() {
 
           <div className="mt-8">
             {loading ? (
-              <div className="py-16 text-center text-slate-400">Loading projects...</div>
+              <div className="py-16 text-center text-[#5B6E8C]">Loading projects...</div>
+            ) : loadError ? (
+              <div className="py-16 text-center text-[#5B6E8C]">
+                Couldn't reach the server. Please try again in a bit.
+              </div>
             ) : (
               <ProjectsGrid
                 projects={paginated}
                 view={view}
-                onReset={() => {
-                  setSearch("");
-                  setDifficulty("All");
-                  setCategory("All");
-                  setSort("Newest");
-                  setPage(1);
-                }}
+                onReset={resetFilters}
               />
             )}
           </div>

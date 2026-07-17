@@ -10,17 +10,19 @@ export default function ContinueLearning() {
   const navigate = useNavigate();
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="rounded-2xl border border-[#16223A]/8 bg-white p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900">Continue Learning</h2>
-          <p className="mt-1 text-sm text-slate-500">Resume where you left off.</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-[#16223A]">
+            Continue learning
+          </h2>
+          <p className="mt-1 text-sm text-[#5B6E8C]">Resume where you left off.</p>
         </div>
         <button
           onClick={() => navigate("/projects")}
-          className="text-indigo-600 hover:underline"
+          className="text-sm font-medium text-[#119DA4] hover:text-[#0C7E83]"
         >
-          View All
+          View all
         </button>
       </div>
 
@@ -28,24 +30,28 @@ export default function ContinueLearning() {
         {activeProjects.map((project) => (
           <div
             key={project.id}
-            className="rounded-2xl border border-slate-200 p-5 transition hover:border-indigo-500 hover:shadow-md"
+            className="rounded-xl border border-[#16223A]/8 p-5 transition hover:border-[#119DA4]/40"
           >
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs font-medium uppercase text-indigo-600">{project.category}</p>
-                <h3 className="mt-1 text-xl font-semibold text-slate-900">{project.title}</h3>
+                <p className="text-xs font-medium uppercase tracking-wide text-[#119DA4]">
+                  {project.category}
+                </p>
+                <h3 className="mt-1 text-xl font-semibold text-[#16223A]">
+                  {project.title}
+                </h3>
               </div>
-              <ArrowRight className="text-slate-400" size={20} />
+              <ArrowRight className="text-[#5B6E8C]" size={20} />
             </div>
 
             <div className="mt-5">
               <div className="mb-2 flex justify-between text-sm">
-                <span className="text-slate-500">Progress</span>
-                <span className="font-semibold">{project.progress}%</span>
+                <span className="text-[#5B6E8C]">Progress</span>
+                <span className="font-medium text-[#16223A]">{project.progress}%</span>
               </div>
-              <div className="h-3 overflow-hidden rounded-full bg-slate-200">
+              <div className="h-2 overflow-hidden rounded-full bg-[#16223A]/8">
                 <div
-                  className="h-full rounded-full bg-indigo-600"
+                  className="h-full rounded-full bg-[#119DA4]"
                   style={{ width: `${project.progress}%` }}
                 />
               </div>
@@ -53,9 +59,9 @@ export default function ContinueLearning() {
 
             <button
               onClick={() => navigate(`/learn/${project.id}/1`)}
-              className="mt-5 rounded-xl bg-indigo-600 px-5 py-2 text-white transition hover:bg-indigo-700"
+              className="mt-5 rounded-lg bg-[#16223A] px-5 py-2 font-medium text-white transition hover:bg-[#119DA4]"
             >
-              Continue Project
+              Continue project
             </button>
           </div>
         ))}

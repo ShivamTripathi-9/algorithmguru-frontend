@@ -8,26 +8,30 @@ const projects = [
 ];
 
 const badgeColor = {
-  Beginner: "bg-green-100 text-green-700",
-  Intermediate: "bg-yellow-100 text-yellow-700",
-  Advanced: "bg-red-100 text-red-700",
+  Beginner: "bg-green-50 text-green-700",
+  Intermediate: "bg-amber-50 text-amber-700",
+  Advanced: "bg-red-50 text-red-700",
 };
 
 export default function RecommendedProjects() {
   const navigate = useNavigate();
 
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <section className="rounded-2xl border border-[#16223A]/8 bg-white p-6">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900">Recommended Projects</h2>
-          <p className="mt-1 text-sm text-slate-500">Start building practical AI applications.</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-[#16223A]">
+            Recommended projects
+          </h2>
+          <p className="mt-1 text-sm text-[#5B6E8C]">
+            Start building practical AI applications.
+          </p>
         </div>
         <button
           onClick={() => navigate("/projects")}
-          className="text-indigo-600 font-medium hover:underline"
+          className="text-sm font-medium text-[#119DA4] hover:text-[#0C7E83]"
         >
-          View All
+          View all
         </button>
       </div>
 
@@ -35,41 +39,41 @@ export default function RecommendedProjects() {
         {projects.map((project) => (
           <div
             key={project.id}
-            className="overflow-hidden rounded-3xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+            className="cursor-pointer overflow-hidden rounded-2xl border border-[#16223A]/8 bg-white transition hover:border-[#119DA4]/40"
             onClick={() => navigate(`/projects/${project.id}`)}
           >
-            <img src={project.image} alt={project.title} className="h-52 w-full object-cover" />
+            <img src={project.image} alt={project.title} className="h-44 w-full object-cover" />
 
             <div className="p-5">
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-sm font-medium text-indigo-600">{project.category}</span>
-                <span className={`rounded-full px-3 py-1 text-xs font-semibold ${badgeColor[project.difficulty]}`}>
+                <span className="text-sm font-medium text-[#119DA4]">{project.category}</span>
+                <span className={`rounded-full px-3 py-1 text-xs font-medium ${badgeColor[project.difficulty]}`}>
                   {project.difficulty}
                 </span>
               </div>
 
-              <h3 className="text-xl font-bold text-slate-900">{project.title}</h3>
+              <h3 className="text-lg font-semibold text-[#16223A]">{project.title}</h3>
 
-              <div className="mt-3 flex items-center gap-2 text-sm text-slate-500">
+              <div className="mt-3 flex items-center gap-2 text-sm text-[#5B6E8C]">
                 <Clock3 size={16} />
                 {project.duration}
               </div>
 
               <div className="mt-5">
                 <div className="mb-2 flex justify-between text-sm">
-                  <span>Progress</span>
-                  <span>{project.progress}%</span>
+                  <span className="text-[#5B6E8C]">Progress</span>
+                  <span className="text-[#16223A]">{project.progress}%</span>
                 </div>
-                <div className="h-2 overflow-hidden rounded-full bg-slate-200">
-                  <div className="h-full rounded-full bg-indigo-600" style={{ width: `${project.progress}%` }} />
+                <div className="h-2 overflow-hidden rounded-full bg-[#16223A]/8">
+                  <div className="h-full rounded-full bg-[#119DA4]" style={{ width: `${project.progress}%` }} />
                 </div>
               </div>
 
               <button
                 onClick={(e) => { e.stopPropagation(); navigate(`/projects/${project.id}`); }}
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3 font-semibold text-white transition hover:bg-indigo-700"
+                className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-[#119DA4] py-3 font-medium text-white transition hover:bg-[#0C7E83]"
               >
-                Start Project <ArrowRight size={18} />
+                Start project <ArrowRight size={18} />
               </button>
             </div>
           </div>

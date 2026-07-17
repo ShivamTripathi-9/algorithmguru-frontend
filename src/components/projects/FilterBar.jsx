@@ -21,8 +21,8 @@ export default function FilterBar({ difficulty, category, onChange }) {
             onClick={() => onChange("difficulty", item)}
             className={`rounded-full border px-5 py-2 text-sm transition ${
               difficulty === item
-                ? "border-indigo-600 bg-indigo-600 text-white"
-                : "border-slate-300 bg-white hover:border-indigo-500 hover:bg-indigo-600 hover:text-white"
+                ? "border-[#119DA4] bg-[#119DA4] text-white"
+                : "border-[#16223A]/10 bg-white text-[#16223A]/70 hover:border-[#119DA4] hover:text-[#119DA4]"
             }`}
           >
             {item}
@@ -38,8 +38,8 @@ export default function FilterBar({ difficulty, category, onChange }) {
             onClick={() => onChange("category", item)}
             className={`rounded-full px-4 py-2 text-sm transition ${
               category === item
-                ? "bg-slate-900 text-white"
-                : "bg-slate-200 hover:bg-slate-900 hover:text-white"
+                ? "bg-[#16223A] text-white"
+                : "bg-[#16223A]/5 text-[#16223A]/70 hover:bg-[#16223A] hover:text-white"
             }`}
           >
             {item}

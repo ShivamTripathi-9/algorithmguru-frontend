@@ -8,13 +8,13 @@ import LearningCalendar from "../components/dashboard/LearningCalendar";
 
 export default function DashboardPage() {
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="min-h-screen bg-[#F7FAFB]">
       <DashboardHero />
 
-      <div className="mx-auto max-w-7xl px-4 py-8 space-y-8">
+      <div className="mx-auto max-w-7xl space-y-8 px-4 py-8">
         <StatsGrid />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <ContinueLearning />
           </div>

@@ -48,43 +48,31 @@ const benefits = [
 
 export default function Benefits() {
   return (
-    <section className="bg-white py-20">
-      <div className="mx-auto max-w-7xl px-6">
-        {/* Heading */}
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="rounded-full bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-600">
-            Why Choose AlgorithmGuru
-          </span>
-
-          <h2 className="mt-5 text-4xl font-bold text-slate-900">
-            Learn Faster, Build Better
+    <section className="bg-[#F7FAFB] py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-[#16223A]">
+            Learn faster, build better
           </h2>
-
-          <p className="mt-4 text-lg text-slate-600">
+          <p className="mt-3 text-[#5B6E8C]">
             Hum sirf courses nahi dete — hum tumhe real-world AI engineer
             banne ke liye practical experience dete hain.
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
           {benefits.map((item, index) => {
             const Icon = item.icon;
 
             return (
-              <div
-                key={index}
-                className="rounded-3xl border border-slate-200 bg-slate-50 p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-              >
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white">
-                  <Icon size={28} />
-                </div>
+              <div key={index}>
+                <Icon className="h-6 w-6 text-[#119DA4]" strokeWidth={1.75} />
 
-                <h3 className="mt-6 text-xl font-bold text-slate-900">
+                <h3 className="mt-4 text-lg font-medium text-[#16223A]">
                   {item.title}
                 </h3>
 
-                <p className="mt-3 leading-7 text-slate-600">
+                <p className="mt-2 leading-6 text-[#5B6E8C]">
                   {item.description}
                 </p>
               </div>
