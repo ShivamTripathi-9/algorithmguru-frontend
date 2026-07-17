@@ -78,7 +78,7 @@ export default function ProjectDetailsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center text-slate-400">
+      <div className="flex min-h-[60vh] items-center justify-center text-[#5B6E8C]">
         Loading project...
       </div>
     );
@@ -87,22 +87,24 @@ export default function ProjectDetailsPage() {
   if (!project) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-        <h2 className="text-2xl font-bold text-slate-800">Project Not Found</h2>
+        <h2 className="text-2xl font-semibold tracking-tight text-[#16223A]">
+          Project not found
+        </h2>
         <button
           onClick={() => navigate("/projects")}
-          className="rounded-xl bg-indigo-600 px-6 py-3 text-white hover:bg-indigo-700"
+          className="rounded-lg bg-[#119DA4] px-6 py-3 font-medium text-white transition hover:bg-[#0C7E83]"
         >
-          Back to Projects
+          Back to projects
         </button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#F7FAFB]">
       <ProjectHero project={project} />
 
-      <div className="mx-auto max-w-7xl px-4 py-10 grid gap-8 lg:grid-cols-3">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-2">
           <ProjectOverview project={project} />
           <SkillsLearned project={project} />
