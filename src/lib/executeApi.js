@@ -71,3 +71,19 @@ export function executeCode(projectSlug, stepNum, code) {
     body: JSON.stringify({ project, step, code }),
   });
 }
+
+// executeApi.js me add karo
+export async function getJobStatus(jobId) {
+  return request(`/jobs/${jobId}`);
+}
+
+export async function pollJob(jobId, { interval = 800, timeout = 30000 } = {}) {
+  const start = Date.now();
+  while (Date.now() - start < timeout) {
+    const job = await getJobStatus(jobId);
+    if (job.status === "finished") return job.result;
+    if (job.status === "failed") throw new Error("Execution failed on server.");
+    await new Promise((r) => setTimeout(r, interval));
+  }
+  throw new Error("Execution timed out.");
+}

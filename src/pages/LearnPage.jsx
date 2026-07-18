@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { FileText, Code2, Eye } from "lucide-react";
 
 // APIs
-import { executeCode } from "../lib/executeApi";
+import { executeCode, pollJob } from "../lib/executeApi";
 import { getProject, getProjectTasks, startProject, getProgress, submitTask } from "../lib/api";
 
 // Components
@@ -189,7 +189,8 @@ export default function LearnPage() {
     setRunResult(null);
     setOutput("Running...");
     try {
-      const result = await executeCode(BACKEND_SLUG, step.id, code);
+      const { job_id } = await executeCode(BACKEND_SLUG, step.id, code);
+      const result = await pollJob(job_id);
       setOutput([result.stdout, result.stderr].filter(Boolean).join("\n") || "(no output)");
       setRunResult({ success: result.success, message: result.message, errors: result.errors });
       if (result.success) toast.success("Run succeeded!");
