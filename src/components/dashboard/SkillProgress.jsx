@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { dashboardAPI } from "../../services/api"; // path apne hisab se set kar lena
+import { getDashboard } from "../../lib/api";
 
 export default function SkillProgress() {
   const [skills, setSkills] = useState([]);
@@ -15,16 +15,8 @@ export default function SkillProgress() {
       setLoading(true);
       setError(null);
 
-      const res = await dashboardAPI.get();
-
-      // Assumption: response mein "skills" key hoga, jisme { name, progress } objects ho.
-      // Agar backend "skill_progress" ya kuch aur naam se bhejta hai to
-      // yahan wahi field name daal dena.
-      const list =
-        res.data?.skills ||
-        res.data?.data?.skills ||
-        res.data?.skill_progress ||
-        [];
+      const data = await getDashboard();
+      const list = data?.skills || data?.skill_progress || [];
 
       setSkills(list);
     } catch (err) {
@@ -62,14 +54,13 @@ export default function SkillProgress() {
       </p>
 
       {skills.length === 0 ? (
-        <p className="mt-8 text-sm text-[#5B6E8C]">Abhi koi skill data nahi hai.</p>
+        <p className="mt-8 text-sm text-[#5B6E8C]">No skill data yet.</p>
       ) : (
         <div className="mt-8 space-y-6">
           {skills.map((skill) => (
             <div key={skill.name}>
               <div className="mb-2 flex items-center justify-between">
                 <span className="font-medium text-[#16223A]">{skill.name}</span>
-
                 <span className="text-sm font-medium text-[#5B6E8C]">
                   {skill.progress}%
                 </span>

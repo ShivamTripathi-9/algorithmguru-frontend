@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { dashboardAPI } from "../../services/api"; // path apne hisab se set kar lena
+import { getDashboard } from "../../lib/api";
 
 function timeAgo(dateString) {
   if (!dateString) return "";
@@ -43,18 +43,9 @@ export default function RecentActivity() {
       setLoading(true);
       setError(null);
 
-      const res = await dashboardAPI.get();
-
-      // Assumption: backend response mein "recentActivity" key hoga,
-      // jisme { title, created_at } jaise objects honge.
-      // Agar backend "activities" ya "recent_activity" naam se bhejta hai,
-      // to fallback chains already handle kar rahi hain.
+      const data = await getDashboard();
       const list =
-        res.data?.recentActivity ||
-        res.data?.data?.recentActivity ||
-        res.data?.recent_activity ||
-        res.data?.activities ||
-        [];
+        data?.recentActivity || data?.recent_activity || data?.activities || [];
 
       setActivities(list);
     } catch (err) {
@@ -98,18 +89,14 @@ export default function RecentActivity() {
       </h2>
 
       {activities.length === 0 ? (
-        <p className="mt-8 text-sm text-[#5B6E8C]">
-          Abhi tak koi activity nahi hai.
-        </p>
+        <p className="mt-8 text-sm text-[#5B6E8C]">No activity yet.</p>
       ) : (
         <div className="mt-8 space-y-5">
           {activities.map((activity, index) => (
             <div key={activity.id || index} className="flex gap-4">
               <div className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#119DA4]" />
-
               <div>
                 <h3 className="font-medium text-[#16223A]">{activity.title}</h3>
-
                 <p className="text-sm text-[#5B6E8C]">
                   {activity.time || timeAgo(activity.created_at)}
                 </p>

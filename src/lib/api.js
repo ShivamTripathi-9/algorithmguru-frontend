@@ -5,6 +5,7 @@
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 const TOKEN_KEY = "algoguru_token";
+const USER_KEY = "algoguru_user";
 
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -16,6 +17,26 @@ export function setToken(token) {
 
 export function clearToken() {
   localStorage.removeItem(TOKEN_KEY);
+}
+
+// /auth/me only returns a decoded JWT payload ({ userId, role }), not the
+// full profile (name, email, etc). We cache the full user object we get
+// back from login/signup here so we can restore it on refresh.
+export function getCachedUser() {
+  try {
+    const raw = localStorage.getItem(USER_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function setCachedUser(user) {
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+
+export function clearCachedUser() {
+  localStorage.removeItem(USER_KEY);
 }
 
 async function request(path, options = {}) {

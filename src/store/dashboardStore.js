@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { dashboardAPI } from "../services/api";
+import { getDashboard } from "../lib/api";
 
 const useDashboardStore = create((set) => ({
   data: null,
@@ -9,11 +9,11 @@ const useDashboardStore = create((set) => ({
   fetchDashboard: async () => {
     set({ loading: true, error: null });
     try {
-      const { data } = await dashboardAPI.get();
+      const data = await getDashboard();
       set({ data, loading: false });
     } catch (err) {
       set({
-        error: err.message || "Dashboard load nahi ho saka.",
+        error: err.message || "Could not load dashboard.",
         loading: false,
       });
     }

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { projectsAPI } from "../services/api";
+import { listProjects } from "../lib/api";
 
 const CATEGORY_MAP = {
   "machine-learning": "Machine Learning",
@@ -37,7 +37,7 @@ const useProjectsStore = create((set) => ({
   fetchProjects: async () => {
     set({ loading: true, error: null });
     try {
-      const { data } = await projectsAPI.getAll();
+      const data = await listProjects();
 
       const list = Array.isArray(data)
         ? data
@@ -49,7 +49,7 @@ const useProjectsStore = create((set) => ({
         set({
           projects: [],
           loading: false,
-          error: "Database mein abhi koi project nahi hai. Baad mein check karein.",
+          error: "No projects available in the database yet. Please check back later.",
         });
         return;
       }
@@ -58,7 +58,7 @@ const useProjectsStore = create((set) => ({
     } catch (err) {
       set({
         loading: false,
-        error: err.message || "Projects load karne mein problem aayi. Dobara try karein.",
+        error: err.message || "There was a problem loading projects. Please try again.",
       });
     }
   },

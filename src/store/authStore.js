@@ -2,7 +2,7 @@ import { create } from "zustand";
 import * as api from "../lib/api";
 
 const useAuthStore = create((set) => ({
-  user: null,
+  user: api.getCachedUser(),
   isAuthenticated: Boolean(api.getToken()),
   hydrating: Boolean(api.getToken()), // true only if token exists and needs verification
   loading: false,
@@ -13,6 +13,7 @@ const useAuthStore = create((set) => ({
     try {
       const data = await api.signup({ name, email, password });
       api.setToken(data.token);
+      api.setCachedUser(data.user);
       set({ user: data.user, isAuthenticated: true, loading: false });
       return data;
     } catch (err) {
@@ -26,6 +27,7 @@ const useAuthStore = create((set) => ({
     try {
       const data = await api.login({ email, password });
       api.setToken(data.token);
+      api.setCachedUser(data.user);
       set({ user: data.user, isAuthenticated: true, loading: false });
       return data;
     } catch (err) {
@@ -34,26 +36,36 @@ const useAuthStore = create((set) => ({
     }
   },
 
+  // /auth/me only returns a decoded token payload ({ userId, role }), not the
+  // full profile. We use it purely to verify the token is still valid, and
+  // fall back to the cached user (from login/signup) for display data.
   hydrate: async () => {
     if (!api.getToken()) return;
     try {
-      const user = await api.getMe();
-      set({ user, isAuthenticated: true, hydrating: false });
+      const payload = await api.getMe();
+      const cachedUser = api.getCachedUser();
+      const mergedUser = { ...cachedUser, ...payload };
+      api.setCachedUser(mergedUser);
+      set({ user: mergedUser, isAuthenticated: true, hydrating: false });
     } catch {
       api.clearToken();
+      api.clearCachedUser();
       set({ user: null, isAuthenticated: false, hydrating: false });
     }
   },
 
   logout: () => {
     api.clearToken();
+    api.clearCachedUser();
     set({ user: null, isAuthenticated: false });
   },
 
   updateUser: (userData) =>
-    set((state) => ({
-      user: { ...state.user, ...userData },
-    })),
+    set((state) => {
+      const merged = { ...state.user, ...userData };
+      api.setCachedUser(merged);
+      return { user: merged };
+    }),
 }));
 
 export default useAuthStore;
