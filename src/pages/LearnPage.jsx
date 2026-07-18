@@ -205,8 +205,10 @@ export default function LearnPage() {
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
-      // 1. FastAPI pe code test karo
-      const result = await executeCode(BACKEND_SLUG, step.id, code);
+      // 1. FastAPI pe job enqueue karo, phir poll karke result lo
+      const { job_id } = await executeCode(BACKEND_SLUG, step.id, code);
+      const result = await pollJob(job_id);
+
       setOutput([result.stdout, result.stderr].filter(Boolean).join("\n") || "(no output)");
       setRunResult({ success: result.success, message: result.message, errors: result.errors });
 
