@@ -2,16 +2,13 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getProject, getProgress } from "../lib/api";
-import { listSteps } from "../lib/executeApi";
+import { listSteps, isProjectLinked } from "../lib/executeApi";
 import ProjectHero from "../components/projectDetails/ProjectHero";
 import ProjectOverview from "../components/projectDetails/ProjectOverview";
 import SkillsLearned from "../components/projectDetails/SkillsLearned";
 import LearningOutcomes from "../components/projectDetails/LearningOutcomes";
 import ProjectSteps from "../components/projectDetails/ProjectSteps";
 import StartLearningCard from "../components/projectDetails/StartLearningCard";
-
-// Keep in sync with the same constant in LearnPage.jsx
-const BACKEND_SLUG = "image-classification";
 
 export default function ProjectDetailsPage() {
   const { id } = useParams();
@@ -26,7 +23,7 @@ export default function ProjectDetailsPage() {
     getProject(id)
       .then(async (data) => {
         if (cancelled) return;
-        const linked = data.slug === BACKEND_SLUG;
+        const linked = isProjectLinked(data.slug);
 
         let steps = [{ id: 1, title: "Coming soon" }];
         if (linked) {

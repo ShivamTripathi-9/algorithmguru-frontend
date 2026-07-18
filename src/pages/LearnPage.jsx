@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { FileText, Code2, Eye } from "lucide-react";
 
 // APIs
-import { executeCode, pollJob } from "../lib/executeApi";
+import { executeCode, pollJob, isProjectLinked } from "../lib/executeApi";
 import { getProject, getProjectTasks, startProject, getProgress, submitTask } from "../lib/api";
 
 // Components
@@ -14,8 +14,6 @@ import StepContent from "../components/learn/StepContent";
 import EditorToolbar from "../components/learn/EditorToolbar";
 import CodeEditor from "../components/learn/CodeEditor";
 import OutputConsole from "../components/learn/OutputConsole";
-
-const BACKEND_SLUG = "image-classification";
 
 export default function LearnPage() {
   const { projectId, stepId } = useParams();
@@ -73,7 +71,7 @@ export default function LearnPage() {
           return;
         }
 
-        const linked = projectData.slug === BACKEND_SLUG;
+        const linked = isProjectLinked(projectData.slug);
         setIsBackendLinked(linked);
 
         const formattedSteps = tasksData.map((task) => {
@@ -189,7 +187,7 @@ export default function LearnPage() {
     setRunResult(null);
     setOutput("Running...");
     try {
-      const { job_id } = await executeCode(BACKEND_SLUG, step.id, code);
+      const { job_id } = await executeCode(project.slug, step.id, code);
       const result = await pollJob(job_id);
       setOutput([result.stdout, result.stderr].filter(Boolean).join("\n") || "(no output)");
       setRunResult({ success: result.success, message: result.message, errors: result.errors });
@@ -206,7 +204,7 @@ export default function LearnPage() {
     setSubmitting(true);
     try {
       // 1. FastAPI pe job enqueue karo, phir poll karke result lo
-      const { job_id } = await executeCode(BACKEND_SLUG, step.id, code);
+      const { job_id } = await executeCode(project.slug, step.id, code);
       const result = await pollJob(job_id);
 
       setOutput([result.stdout, result.stderr].filter(Boolean).join("\n") || "(no output)");

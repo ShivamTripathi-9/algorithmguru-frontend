@@ -5,17 +5,41 @@
  * (auth, projects, progress). This file ONLY talks to FastAPI on
  * VITE_EXECUTE_URL (defaults to http://localhost:8000).
  *
- * The frontend uses hyphenated project slugs ("image-classification") and
- * un-padded step numbers (1, 2, 3...), while FastAPI uses underscored
- * project folder names ("image_classification") and zero-padded step
- * folders ("step01"). These helpers translate between the two.
+ * The frontend uses hyphenated project slugs (from the DB, e.g.
+ * "rag-llamaindex-huggingface-ollama") while FastAPI stores each project
+ * under its own folder name under app/projects/ (e.g. "RAG"). These do NOT
+ * reliably derive from one another by swapping hyphens for underscores —
+ * that only happens to work for "image-classification" -> "image_classification".
+ * So instead of a blind string transform, we keep an explicit map from DB
+ * slug to actual FastAPI folder name. Add an entry here whenever a new
+ * project is linked to the execution backend.
+ *
+ * Step numbers (1, 2, 3...) still map predictably to zero-padded folders
+ * ("step01"), so that part stays a pure function.
  */
 
 const EXECUTE_BASE_URL = import.meta.env.VITE_EXECUTE_URL || "http://localhost:8000";
 
-// "image-classification" -> "image_classification"
+// DB slug -> FastAPI folder name under backend/app/projects/
+// Keep this in sync with whatever folders actually exist on the execution
+// server; when in doubt, check GET {VITE_EXECUTE_URL}/projects.
+const PROJECT_FOLDER_MAP = {
+  "image-classification": "image_classification",
+  "rag-llamaindex-huggingface-ollama": "RAG",
+};
+
 export function toBackendProject(slug) {
-  return slug.replaceAll("-", "_");
+  const mapped = PROJECT_FOLDER_MAP[slug];
+  if (!mapped) {
+    throw new Error(`No execution backend folder configured for project slug "${slug}"`);
+  }
+  return mapped;
+}
+
+// Single source of truth for "does this project have a working execution
+// backend hooked up". Use this instead of hardcoding a slug check per page.
+export function isProjectLinked(slug) {
+  return Object.prototype.hasOwnProperty.call(PROJECT_FOLDER_MAP, slug);
 }
 
 // 1 -> "step01", "12" -> "step12"
