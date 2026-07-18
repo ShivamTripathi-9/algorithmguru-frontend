@@ -6,11 +6,13 @@ import useAuthStore from "./store/authStore";
 
 function App() {
   const hydrate = useAuthStore((s) => s.hydrate);
+  const hydrating = useAuthStore((s) => s.hydrating);
 
   useEffect(() => {
     hydrate();
   }, [hydrate]);
 
+  if (hydrating) return null; // session verify hone tak kuch mat dikhao
   return (
     <BrowserRouter>
       <Toaster position="top-right" toastOptions={{ duration: 2500 }} />

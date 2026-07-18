@@ -4,6 +4,7 @@ import * as api from "../lib/api";
 const useAuthStore = create((set) => ({
   user: null,
   isAuthenticated: Boolean(api.getToken()),
+  hydrating: Boolean(api.getToken()), // true only if token exists and needs verification
   loading: false,
   error: null,
 
@@ -33,15 +34,14 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  // Call this on app load to restore session from a stored token
   hydrate: async () => {
     if (!api.getToken()) return;
     try {
       const user = await api.getMe();
-      set({ user, isAuthenticated: true });
+      set({ user, isAuthenticated: true, hydrating: false });
     } catch {
       api.clearToken();
-      set({ user: null, isAuthenticated: false });
+      set({ user: null, isAuthenticated: false, hydrating: false });
     }
   },
 

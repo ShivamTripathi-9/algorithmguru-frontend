@@ -14,7 +14,7 @@ export default function DashboardPage() {
       <div className="mx-auto max-w-7xl space-y-8 px-4 py-8">
         <StatsGrid />
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3   mx-auto max-w-6xl px-4 ">
           <div className="lg:col-span-2">
             <ContinueLearning />
           </div>

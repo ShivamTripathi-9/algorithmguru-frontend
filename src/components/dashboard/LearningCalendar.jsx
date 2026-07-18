@@ -22,7 +22,7 @@ export default function LearningCalendar() {
   const days = generateCalendar();
 
   return (
-    <section className="rounded-2xl border border-[#16223A]/8 bg-white p-6">
+    <section className="rounded-2xl  bg-white p-6 mx-auto max-w-6xl px-4">
       {/* Header */}
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>

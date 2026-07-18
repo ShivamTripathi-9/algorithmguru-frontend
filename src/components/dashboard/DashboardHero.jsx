@@ -1,7 +1,7 @@
 export default function DashboardHero() {
   return (
     <section className="border-b border-[#16223A]/8 bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-10">
+      <div className="mx-auto max-w-6xl px-4 py-10">
         <p className="text-sm font-medium text-[#119DA4]">Welcome back</p>
 
         <h1 className="mt-2 text-4xl font-semibold tracking-tight text-[#16223A]">
